@@ -21,9 +21,12 @@ Any rule keyed to line count gets both of these backwards.
 ## Install
 
 ```sh
-git clone https://github.com/paragon-stats/blastradius
-cp -r blastradius ~/.claude/skills/blastradius
+claude plugin marketplace add paragon-stats/blastradius
+claude plugin install blastradius@blastradius
 ```
+
+`claude plugin update blastradius@blastradius` moves it to the latest release —
+a copied directory has no such path, which is why this installs as a plugin.
 
 Deliberately a **separate skill** from
 [lastmile](https://github.com/paragon-stats/lastmile) so it can be disabled on
