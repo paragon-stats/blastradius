@@ -21,7 +21,7 @@ Any rule keyed to line count gets both of these backwards.
 ## Install
 
 ```sh
-claude plugin marketplace add paragon-stats/blastradius
+claude plugin marketplace add pkloehn1/blastradius
 claude plugin install blastradius@blastradius
 ```
 
@@ -29,7 +29,7 @@ claude plugin install blastradius@blastradius
 a copied directory has no such path, which is why this installs as a plugin.
 
 Deliberately a **separate skill** from
-[lastmile](https://github.com/paragon-stats/lastmile) so it can be disabled on
+[lastmile](https://github.com/pkloehn1/lastmile) so it can be disabled on
 its own. lastmile makes an agent do *more*; this one lets it do *less*, and you
 should be able to remove the second without losing the first.
 
