@@ -1,0 +1,23 @@
+{
+  "name": "blastradius",
+  "owner": {
+    "name": "Pete Kloehn"
+  },
+  "description": "Single-plugin marketplace publishing blastradius: process sized to what a change can reach rather than to its diff.",
+  "plugins": [
+    {
+      "name": "blastradius",
+      "source": "./",
+      "description": "Reach, not size. A classifier that makes a change heavy on contact with CI, releases, goldens, public surfaces, required checks, policy, dependencies, user-visible output or concurrency, and makes light a claim the agent must enumerate and state. Composes with lastmile (whether you finish) and ponytail (how much you build).",
+      "category": "development",
+      "tags": [
+        "agent-skills",
+        "agentic-coding",
+        "code-review",
+        "risk-assessment",
+        "process",
+        "best-practices"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "blastradius",
+  "description": "Sizes the process a change earns to what the change can reach, not how many lines it touches. Heavy is the default; light must be earned against an enumerated checklist and stated out loud. Weight modulates discretionary ceremony only, never verification or any rule the operator set.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Pete Kloehn"
+  },
+  "homepage": "https://github.com/paragon-stats/blastradius",
+  "repository": "https://github.com/paragon-stats/blastradius",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "agentic-coding",
+    "code-review",
+    "risk-assessment",
+    "process",
+    "best-practices"
+  ]
+}
