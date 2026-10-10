@@ -1,7 +1,7 @@
 {
   "name": "blastradius",
   "description": "Sizes the process a change earns to what the change can reach, not how many lines it touches. Heavy is the default; light must be earned against an enumerated checklist and stated out loud. Weight modulates discretionary ceremony only, never verification or any rule the operator set.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Pete Kloehn"
   },
