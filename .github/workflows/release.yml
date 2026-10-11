@@ -2,8 +2,9 @@
 # Automated release + changelog via release-please. Conventional Commits on
 # `main` drive a maintained release PR that bumps the version (in
 # .release-please-manifest.json and, via extra-files, .claude-plugin/plugin.json)
-# and regenerates CHANGELOG.md. Merging that PR tags the release and publishes
-# a GitHub Release. Config: release-please-config.json + .release-please-manifest.json.
+# and regenerates CHANGELOG.md. That PR merges itself once the pipeline passes,
+# and merging it tags the release and publishes a GitHub Release.
+# Config: release-please-config.json + .release-please-manifest.json.
 name: release-please
 
 "on":
@@ -20,11 +21,35 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      # Plain GITHUB_TOKEN is sufficient here: this repo has no branch protection,
-      # so the App token's two benefits (signed commits for required_signatures,
-      # and triggering downstream required checks) don't apply.
+      - name: Mint GitHub App installation token
+        # The built-in github.token cannot be used here. release-please creates
+        # its pull request through the REST API, and GitHub's workflow
+        # loop-prevention suppresses events raised by that token - so the
+        # release pull request would start no workflows, its required checks
+        # would never report, and auto-merge would wait on them forever. An App
+        # installation token is not suppressed, and its commits also carry
+        # GitHub's verified signature.
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.RELEASE_PLEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_PLEASE_APP_PRIVATE_KEY }}
+
       - name: Run release-please
+        id: release
         uses: googleapis/release-please-action@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-...
+          token: ${{ steps.app-token.outputs.token }}
+
+      # A release pull request is a version bump and a changelog entry derived
+      # from commits already on main, so no human adds anything by reading it.
+      # It merges itself - but only through the same required checks every other
+      # pull request faces, and it stops dead if either fails. The token is the
+      # App's rather than github.token so that the merge it eventually performs
+      # also triggers the push-side run that creates the tag and the release.
+      - name: Let the release pull request merge itself once checks pass
+        if: ${{ steps.release.outputs.pr != '' }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
+        run: gh pr merge --auto --squash "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}"
